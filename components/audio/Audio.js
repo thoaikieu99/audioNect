@@ -15,8 +15,8 @@ const Audio = (props) => {
       >
         <Image
           src={`/rez/${props.image}`}
-          width={130}
-          height={190}
+          width={193}
+          height={278}
           alt={props.title}
         />
         <div className="divTile">

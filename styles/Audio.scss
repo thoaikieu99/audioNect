@@ -1,10 +1,7 @@
 
 .cardAudio{
-    width: 130px;
-    height: 190px;
     .divTile{
         position: absolute;
-        z-index: 99;
         bottom: 0.5rem;
         width: calc(100% - 1rem);
         color: #f4f4f4;
@@ -21,8 +18,8 @@
     }
     img{
 
-        width: 130px;
-        height: 190px;
+        max-width: 100%;
+        height: 100%;
     }
     .mlieps{
         position: absolute;
