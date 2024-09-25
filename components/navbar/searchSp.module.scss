@@ -1,0 +1,49 @@
+.ahv{
+    width: 300px;
+    background-color: #fff;
+    position: absolute;
+    left: -70px;
+    top:40px;
+    align-items: center;
+    border-radius: 5px;
+    height: auto;
+    list-style: none;
+    padding: 10px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+.con{
+    max-height: 500px;
+}
+
+@media only screen and (max-width: 992px) {
+    .ahv{
+        left: 0px;
+
+    }
+}
+
+@media only screen and (max-height: 900px) {
+    .con{
+        height: 330px;
+    }
+}
+@media only screen and (max-height: 700px) {
+    .con{
+        height: 240px;
+    }
+}
+@media only screen and (max-height: 500px) {
+    .con{
+        height: 200px;
+    }
+}
+@media only screen and (max-height: 400px) {
+    .con{
+        height: 140px;
+    }
+}
+@media only screen and (max-height: 330px) {
+    .con{
+        height: 110px;
+    }
+}
