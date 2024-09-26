@@ -27,18 +27,21 @@ const SignUp = () => {
   };
   const aaa = async () => {
     const obj = {
-      username,
+      username: username,
       password_hash: pass,
       email: email,
       confirmedPassword: confir,
     };
     return await singUP(obj);
   };
+  const router = useRouter();
+  if (cookies[STARTTIME]) {
+    router.push(`/`);
+    return;
+  }
   const handleSubmit = async (event) => {
-    const router = useRouter();
     event.preventDefault();
     const aa = await aaa();
-    console.log(aa);
     if (aa.status == "success") {
       setCookie(STARTTIME, aa.token, { maxAge: MAXAGE });
       router.push(`/`);

@@ -3,9 +3,14 @@ import AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import "react-perfect-scrollbar/dist/css/styles.css";
-import { Container, Row } from "react-bootstrap";
+import { Button, Container, Row } from "react-bootstrap";
 import { useCookies } from "react-cookie";
-import { getApiAddViews } from "../services/apiServices";
+import {
+  getApiAddViews,
+  loadData,
+  saveData,
+  themTTtr,
+} from "../services/apiServices";
 const NodeRSA = require("node-rsa");
 const AudioPlay = (props) => {
   const { audio } = props;
@@ -24,6 +29,7 @@ const AudioPlay = (props) => {
   const INDEXAU = "track-" + audio.id;
   const LINKAU = "linkk-" + audio.id;
   const MAXAGE = 7 * 24 * 3600;
+  const START = "too";
 
   const [isplaya, setIsplaya] = useState(false);
   const [stsv1, setStsv1] = useState(true);
@@ -251,9 +257,52 @@ const AudioPlay = (props) => {
     }, 1000);
     return () => clearTime();
   }, [timeoff]);
+
+  const onClo = async () => {
+    const obj = {
+      recaudio: cookies[LINKAU],
+      rectile: cookies[INDEXAU],
+      startspeed: cookies[SPEED],
+      startime: cookies[STARTTIME],
+      audio_id: audio.id,
+    };
+    const aa = await saveData(obj, cookies[START]);
+
+    if (aa.status == "fail") {
+      if (aa.message == "No TT found with that slug") {
+        alert("Them vao tu truyen truoc");
+      } else {
+        alert(aa.message);
+      }
+    }
+  };
+
+  const loadDa = async () => {
+    const aa = await loadData(audio.id, cookies[START]);
+    if (aa.status == "success") {
+      setCookieLink(aa.data.TuTruyen.recaudio);
+      setCookieIndex(+aa.data.TuTruyen.rectile);
+      setCookieTime(+aa.data.TuTruyen.startime);
+      setCookieSpeed(aa.data.TuTruyen.startspeed);
+      ngheTiepClick();
+    }
+  };
+
+  const themtt = async () => {
+    const obj = {
+      audio_id: audio.id,
+    };
+    const aa = await themTTtr(obj, cookies[START]);
+    if (aa.status == "error") {
+      alert("Da them vao tu truyen");
+    }
+  };
   return (
     <div className="d-flex res justify-content-center align-items-center ">
       <div className="AudioPlay col-12 col-sm-7 col-md-6 rounded-3 shadow-lg bg-body ">
+        <Button onClick={themtt}>Them vao tu truyen</Button>
+        <Button onClick={onClo}>Save</Button>
+        <Button onClick={loadDa}>Load</Button>
         <div className="list">
           {ll}
           <div

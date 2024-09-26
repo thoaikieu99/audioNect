@@ -1,4 +1,4 @@
-const baseUl = `https://kianai158.shop:4000/api/v1`;
+const baseUl = `http://localhost:4000/api/v1`;
 const retuData = async (url) => {
   let topd = await fetch(url);
   let data = await topd.json();
@@ -84,6 +84,43 @@ const singIn = async (obj) => {
   let data = await sing.json();
   return data;
 };
+
+const saveData = async (obj, token) => {
+  const sing = await fetch(`${baseUl}/tu-truyen/update`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ ...obj }),
+  });
+  let data = await sing.json();
+  return data;
+};
+
+const loadData = async (dataax, token) => {
+  const sing = await fetch(`${baseUl}/tu-truyen/getone/${+dataax}`, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  let data = await sing.json();
+  return data;
+};
+
+const themTTtr = async (obj, token) => {
+  const sing = await fetch(`${baseUl}/tu-truyen`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ ...obj }),
+  });
+  let data = await sing.json();
+  return data;
+};
 export {
   getApiNewAudio,
   getApiTheLoai,
@@ -96,4 +133,7 @@ export {
   getfind,
   singUP,
   singIn,
+  saveData,
+  loadData,
+  themTTtr,
 };
