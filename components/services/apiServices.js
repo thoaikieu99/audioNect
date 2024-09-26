@@ -1,4 +1,4 @@
-const baseUl = `http://localhost:4000/api/v1`;
+const baseUl = `http://kianai158.shop:4000/api/v1`;
 const retuData = async (url) => {
   let topd = await fetch(url);
   let data = await topd.json();
