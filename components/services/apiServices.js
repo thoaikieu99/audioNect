@@ -10,16 +10,19 @@ const getApiNewAudio = async (page) => {
   return dataUrl;
 };
 
-const getfindsp = async (find) => {
+const getfindsp = async (find, bol, page = "") => {
+  if (page) {
+    page = `&page=${+page}`;
+  }
   let dataUrl = await retuData(
-    `${baseUl}/audios/search?name=${find}&search=yes`
+    `${baseUl}/audios/search?name=${find}&search=${bol}${page}`
   );
   return dataUrl;
 };
 
 const getfind = async (find, page) => {
   let dataUrl = await retuData(
-    `${baseUl}/audios/search?page=${+page}&name=${find}`
+    `${baseUl}/audios/search?page=${+page}&name=${find}&search=${bol}`
   );
   return dataUrl;
 };
@@ -58,13 +61,7 @@ const getOneAudio = async (slug) => {
   return dataUrl;
 };
 
-const singUP = async () => {
-  const obj = {
-    username: "Admin0001",
-    password_hash: "thoaikieu12",
-    email: "thhoasd@gmail.com",
-    confirmedPassword: "thoaikieu12",
-  };
+const singUP = async (obj) => {
   const sing = await fetch(`${baseUl}/users/signup`, {
     method: "POST",
     headers: {
@@ -73,7 +70,8 @@ const singUP = async () => {
     body: JSON.stringify({ ...obj }),
   });
 
-  return sing;
+  let data = await sing.json();
+  return data;
 };
 const singIn = async (obj) => {
   const sing = await fetch(`${baseUl}/users/signin`, {

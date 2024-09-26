@@ -9,6 +9,7 @@ import TheLoai from "../theLoai/theLoai";
 import { getfindsp } from "../services/apiServices";
 import SearchSp from "./searchSp";
 import Link from "next/link";
+import { useRouter } from "next/router";
 const NavBar = (props) => {
   const [value, setValue] = useState("");
   const [svl, setSvl] = useState();
@@ -17,7 +18,7 @@ const NavBar = (props) => {
   };
   const send = async () => {
     if (value.trim() != "") {
-      const dataf = await getfindsp(value);
+      const dataf = await getfindsp(value, "yes");
       setSvl(dataf);
     } else {
       setSvl();
@@ -30,6 +31,43 @@ const NavBar = (props) => {
 
     return () => clearTimeout(timer);
   }, [value]);
+  const router = useRouter();
+  const preventDefault = (f) => (e) => {
+    e.preventDefault();
+    f(e);
+  };
+  const handleSubmit = preventDefault(() => {
+    router.push({
+      pathname: "search",
+      query: { name: value },
+    });
+  });
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+  var aasad = "";
+  if (isClient) {
+    aasad = props.coo ? (
+      <Link href="#" className="nav-link">
+        <p>avate</p>
+      </Link>
+    ) : (
+      <>
+        <Link href="/signUp" className="nav-link">
+          <p>sign up</p>
+        </Link>
+
+        <Link href="/signIn" className="nav-link">
+          <p>sign in</p>
+        </Link>
+      </>
+    );
+  } else {
+    aasad = "";
+  }
+
   return (
     <div className="Nabar">
       <Navbar collapseOnSelect expand="lg" className=" bg-secondary fixed-top">
@@ -64,6 +102,7 @@ const NavBar = (props) => {
                   style={{
                     position: "absolute",
                   }}
+                  onSubmit={handleSubmit}
                 >
                   <Form.Control
                     type="search"
@@ -80,15 +119,7 @@ const NavBar = (props) => {
                 </Form>
               </Nav>
             </Nav>
-            <Nav>
-              <Nav.Link></Nav.Link>
-            </Nav>
-            <Nav>
-              <Nav.Link href="#deets">sign up</Nav.Link>
-              <Nav.Link eventKey={2} href="#memes">
-                sign in
-              </Nav.Link>
-            </Nav>
+            <Nav>{aasad}</Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>

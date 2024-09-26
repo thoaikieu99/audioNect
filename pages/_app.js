@@ -10,14 +10,16 @@ import "@/styles/theLoai.scss";
 import "@/styles/TopAudio.scss";
 import "@/styles/signUp.scss";
 import { useEffect } from "react";
-
+import { CookiesProvider, useCookies } from "react-cookie";
 export default function App({ Component, pageProps }) {
   useEffect(() => {
     import("bootstrap");
   }, []);
+  const [cookies, setCookie] = useCookies();
+  const STARTTIME = "too";
   return (
     <>
-      <Layout>
+      <Layout coo={cookies[STARTTIME]}>
         <Component {...pageProps} />
       </Layout>
     </>

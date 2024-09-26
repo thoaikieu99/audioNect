@@ -1,10 +1,13 @@
 import { singIn } from "@/components/services/apiServices";
 import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { useCookies } from "react-cookie";
 
 const SignIn = () => {
   const STARTTIME = "too";
+  const MAXAGE = 7 * 24 * 3600;
   const [cookies, setCookie] = useCookies();
 
   const [username, setUsername] = useState();
@@ -16,13 +19,21 @@ const SignIn = () => {
     };
     return await singIn(obj);
   };
+
+  const router = useRouter();
+  if (cookies[STARTTIME]) {
+    router.push(`/`);
+    return;
+  }
   const handleSubmit = async (event) => {
     event.preventDefault();
     const aa = await aaa();
-
-    console.log(aa);
-    // setCookie(STARTTIME, time, { maxAge: MAXAGE });
-    alert(`The name you entered was: ${aa}`);
+    if (aa.status == "success") {
+      setCookie(STARTTIME, aa.token, { maxAge: MAXAGE });
+      router.push(`/`);
+    } else if (aa.status == "fail") {
+      alert(aa.message);
+    }
   };
   const changName = (e) => {
     setUsername(e.target.value);
@@ -66,14 +77,14 @@ const SignIn = () => {
             placeholder="Mat khau"
           />
           <div class="sign-txt s1ddd">
-            <a href="#">Forgot password?</a>
+            <Link href="/forgot">Forgot password?</Link>
           </div>
           <div className="asd">
             <button type="submit">Submit</button>
           </div>
         </form>
         <div class="sign-txt">
-          Not a member? <a href="#">Signup now</a>
+          Not a member? <Link href="/signUp">Signup now</Link>
         </div>
       </div>
     </div>

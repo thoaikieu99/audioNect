@@ -1,20 +1,18 @@
 import { singUP } from "@/components/services/apiServices";
-import Image from "next/image";
+
+import { useRouter } from "next/router";
 import { useState } from "react";
+import { useCookies } from "react-cookie";
 
 const SignUp = () => {
-  const aaa = async () => {
-    await singUP();
-  };
-  aaa();
   const [username, setUsername] = useState();
   const [pass, setPass] = useState();
   const [email, setEmail] = useState();
   const [confir, setConfir] = useState();
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    alert(`The name you entered was: ${name}`);
-  };
+  const STARTTIME = "too";
+  const MAXAGE = 7 * 24 * 3600;
+  const [cookies, setCookie] = useCookies();
+
   const changName = (e) => {
     setUsername(e.target.value);
   };
@@ -26,6 +24,27 @@ const SignUp = () => {
   };
   const changConf = (e) => {
     setConfir(e.target.value);
+  };
+  const aaa = async () => {
+    const obj = {
+      username,
+      password_hash: pass,
+      email: email,
+      confirmedPassword: confir,
+    };
+    return await singUP(obj);
+  };
+  const handleSubmit = async (event) => {
+    const router = useRouter();
+    event.preventDefault();
+    const aa = await aaa();
+    console.log(aa);
+    if (aa.status == "success") {
+      setCookie(STARTTIME, aa.token, { maxAge: MAXAGE });
+      router.push(`/`);
+    } else if (aa.status == "fail") {
+      alert(aa.message);
+    }
   };
   return (
     <div className="formm">
