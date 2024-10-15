@@ -171,7 +171,7 @@ const AudioPlay = (props) => {
 
   const ngheTiepClick = () => {
     setIsclick(true);
-    let position = cookieLink.search("fileatf.synology.me");
+    let position = cookieLink.search("audiotruyenfull.vip");
     if (position == -1) {
       sv1();
     } else {
@@ -234,7 +234,7 @@ const AudioPlay = (props) => {
     aa.forEach((item, index, array) => {
       array[index] = array[index].replace(
         "archive.org/download",
-        "fileatf.synology.me/audio"
+        "audiotruyenfull.vip/audio"
       );
     });
     setPlaylist(aa);
@@ -275,16 +275,24 @@ const AudioPlay = (props) => {
         alert(aa.message);
       }
     }
+    if(aa.status == "success"){
+      alert("success");
+    }
   };
 
   const loadDa = async () => {
     const aa = await loadData(audio.id, cookies[START]);
     if (aa.status == "success") {
+      let aaa = aa.data.TuTruyen.recaudio;
+      console.log(aaa);
       setCookieLink(aa.data.TuTruyen.recaudio);
       setCookieIndex(+aa.data.TuTruyen.rectile);
       setCookieTime(+aa.data.TuTruyen.startime);
       setCookieSpeed(aa.data.TuTruyen.startspeed);
-      ngheTiepClick();
+      if(cookieSpeed == aa.data.TuTruyen){
+        ngheTiepClick();
+      }
+      
     }
   };
 
