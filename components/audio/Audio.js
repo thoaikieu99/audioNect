@@ -7,7 +7,7 @@ const Audio = (props) => {
       String.fromCharCode(charCode)
     );
     const imageLoader = ({ src, width, quality }) => {
-      return `http://47.129.182.111:8081/rez/${src}`
+      return `${src}`
     }
   return (
     <>
@@ -18,9 +18,10 @@ const Audio = (props) => {
       >
         <Image
           loader={imageLoader}
-          src={`${props.image}`}
+          src={`http://47.129.182.111:8081/rez/${props.image}`}
           width={193}
           height={278}
+          unoptimized={true} 
           alt={props.title}
         />
         <div className="divTile">
