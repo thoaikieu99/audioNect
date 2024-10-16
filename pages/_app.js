@@ -10,6 +10,7 @@ import "@/styles/theLoai.scss";
 import "@/styles/TopAudio.scss";
 import "@/styles/signUp.scss";
 import { useEffect } from "react";
+import Head from 'next/head';
 import { CookiesProvider, useCookies } from "react-cookie";
 export default function App({ Component, pageProps }) {
   useEffect(() => {
@@ -19,6 +20,10 @@ export default function App({ Component, pageProps }) {
   const STARTTIME = "too";
   return (
     <>
+    <Head>
+      <meta name="viewport" 
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+      </Head>
       <Layout coo={cookies[STARTTIME]}>
         <Component {...pageProps} />
       </Layout>

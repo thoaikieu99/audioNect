@@ -38,7 +38,7 @@ const NavBar = (props) => {
   };
   const handleSubmit = preventDefault(() => {
     router.push({
-      pathname: "search",
+      pathname: "/search",
       query: { name: value },
     });
   });
