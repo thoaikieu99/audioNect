@@ -198,7 +198,7 @@ const AudioPlay = (props) => {
   const onPlayErr = () => {
 
    let audio = buttonRef?.current?.audio?.current;
-   audio.currentTime =  audio.currentTime - 0.1;
+   audio.currentTime =  audio.currentTime + 0.1;
    audio?.play();
   };
   const ll = (
