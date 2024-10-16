@@ -304,12 +304,11 @@ const AudioPlay = (props) => {
     const aa = await loadData(audio.id, cookies[START]);
     if (aa.status == "success") {
       let aaa = aa.data.TuTruyen.recaudio;
-      console.log(aaa);
       setCookieLink(aa.data.TuTruyen.recaudio);
       setCookieIndex(+aa.data.TuTruyen.rectile);
       setCookieTime(+aa.data.TuTruyen.startime);
       setCookieSpeed(aa.data.TuTruyen.startspeed);
-      if(cookieSpeed == aa.data.TuTruyen){
+      if(cookieSpeed == aa.data.TuTruyen.startspeed){
         ngheTiepClick();
       }
       
