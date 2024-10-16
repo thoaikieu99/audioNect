@@ -2,6 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 
 const TopAudio = (props) => {
+  const imageLoader = ({ src, width, quality }) => {
+    return `http://47.129.182.111:8081/rez/${src}`
+  }
   return (
     <div className="TopAudio">
       <Link
@@ -10,7 +13,8 @@ const TopAudio = (props) => {
         className="thumb"
       >
         <Image
-          src={`/rez/${props.image}`}
+        loader={imageLoader}
+        src={`${props.image}`}
           width={60}
           height={60}
           alt={props.title}
