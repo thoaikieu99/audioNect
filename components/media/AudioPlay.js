@@ -15,6 +15,7 @@ const NodeRSA = require("node-rsa");
 const AudioPlay = (props) => {
   const { audio } = props;
   const [playlist, setPlaylist] = useState("");
+
   useEffect(() => {
     const key1 = new NodeRSA();
     let data2 =
@@ -22,6 +23,7 @@ const AudioPlay = (props) => {
     key1.importKey(data2, "pkcs1-pem");
     const decryptedString = key1.decrypt(audio.link_audio, "utf8").slice(1, -1);
     setPlaylist(decryptedString.split("<br>"));
+
   }, []);
 
   const STARTTIME = "startime-" + audio.id;
@@ -193,12 +195,20 @@ const AudioPlay = (props) => {
     setIsplaya(false);
     console.log("apau");
   };
+  const onPlayErr = () => {
+
+   let audio = buttonRef?.current?.audio?.current;
+   audio.currentTime =  audio.currentTime - 0.1;
+   audio?.play();
+  };
   const ll = (
     <AudioPlayer
       header={<h3 style={{ textAlign: "center" }}>{audio.title}</h3>}
       src={playlist[currentTrack]}
       onPlay={connPlay}
       onPause={connPause}
+      onPlayError={onPlayErr}
+      onError={onPlayErr}
       showSkipControls
       customAdditionalControls={[]}
       customVolumeControls={[]}
@@ -227,10 +237,21 @@ const AudioPlay = (props) => {
     />
   );
   const sv1 = () => {
+    let aa = playlist;
+    aa.forEach((item, index, array) => {
+      array[index] = array[index].replace(
+        "audiotruyenfull.vip/audio",
+        "archive.org/download"
+      
+      );
+    });
+    setPlaylist(aa);
     setStsv1(true);
+    
+    
   };
   const svVip = () => {
-    const aa = playlist;
+    let aa = playlist;
     aa.forEach((item, index, array) => {
       array[index] = array[index].replace(
         "archive.org/download",
@@ -238,7 +259,6 @@ const AudioPlay = (props) => {
       );
     });
     setPlaylist(aa);
-
     setStsv1(false);
   };
   function clearTime() {
