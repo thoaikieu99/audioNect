@@ -6,6 +6,9 @@ const Audio = (props) => {
     str.replace(/(&#(\d+);)/g, (match, capture, charCode) =>
       String.fromCharCode(charCode)
     );
+    const imageLoader = ({ src, width, quality }) => {
+      return `http://47.129.182.111:8081/rez/${src}`
+    }
   return (
     <>
       <div id="1312"></div>
@@ -14,7 +17,8 @@ const Audio = (props) => {
         title={decodeHtmlCharCodes(props.content)}
       >
         <Image
-          src={`/rez/${props.image}`}
+          loader={imageLoader}
+          src={`${props.image}`}
           width={193}
           height={278}
           alt={props.title}
