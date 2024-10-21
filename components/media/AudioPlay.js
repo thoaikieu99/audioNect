@@ -23,7 +23,6 @@ const AudioPlay = (props) => {
     key1.importKey(data2, "pkcs1-pem");
     const decryptedString = key1.decrypt(audio.link_audio, "utf8").slice(1, -1);
     setPlaylist(decryptedString.split("<br>"));
-
   }, []);
 
   const STARTTIME = "startime-" + audio.id;
@@ -196,10 +195,9 @@ const AudioPlay = (props) => {
     console.log("apau");
   };
   const onPlayErr = () => {
-
-   let audio = buttonRef?.current?.audio?.current;
-   audio.currentTime =  audio.currentTime + 0.1;
-   audio?.play();
+    let audio = buttonRef?.current?.audio?.current;
+    audio.currentTime = audio.currentTime + 0.1;
+    audio?.play();
   };
   const ll = (
     <AudioPlayer
@@ -242,21 +240,31 @@ const AudioPlay = (props) => {
       array[index] = array[index].replace(
         "audiotruyenfull.vip/audio",
         "archive.org/download"
-      
       );
     });
     setPlaylist(aa);
     setStsv1(true);
-    
-    
   };
   const svVip = () => {
     let aa = playlist;
     aa.forEach((item, index, array) => {
-      array[index] = array[index].replace(
-        "archive.org/download",
-        "audiotruyenfull.vip/audio"
-      );
+      let aa = index + 1;
+      var str = "" + aa;
+      var pad = "000";
+      var ans = pad.substring(0, pad.length - str.length) + str;
+      let text = array[index];
+      let position = text.search(".mp3");
+      let index1 = text.lastIndexOf("/", position - 1);
+      let index2 = text.lastIndexOf("/", index1 - 2);
+      let result = text.substring(index2 + 1, index1);
+      array[index] =
+        "https://audiotruyenfull.vip/audio/" +
+        result +
+        "/" +
+        ans +
+        "-" +
+        result +
+        ".mp3";
     });
     setPlaylist(aa);
     setStsv1(false);
@@ -295,7 +303,7 @@ const AudioPlay = (props) => {
         alert(aa.message);
       }
     }
-    if(aa.status == "success"){
+    if (aa.status == "success") {
       alert("success");
     }
   };
@@ -308,10 +316,9 @@ const AudioPlay = (props) => {
       setCookieIndex(+aa.data.TuTruyen.rectile);
       setCookieTime(+aa.data.TuTruyen.startime);
       setCookieSpeed(aa.data.TuTruyen.startspeed);
-      if(cookieSpeed == aa.data.TuTruyen.startspeed){
+      if (cookieSpeed == aa.data.TuTruyen.startspeed) {
         ngheTiepClick();
       }
-      
     }
   };
 

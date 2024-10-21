@@ -4,8 +4,11 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useCookies } from "react-cookie";
+import { useContext } from "react";
+import { useSide } from "@/components/context/store";
 
 const SignIn = () => {
+  const { login } = useSide();
   const STARTTIME = "too";
   const MAXAGE = 7 * 24 * 3600;
   const [cookies, setCookie] = useCookies();
@@ -28,8 +31,11 @@ const SignIn = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const aa = await aaa();
+
     if (aa.status == "success") {
       setCookie(STARTTIME, aa.token, { maxAge: MAXAGE });
+      login(aa.data.user.username);
+
       router.push(`/`);
     } else if (aa.status == "fail") {
       alert(aa.message);

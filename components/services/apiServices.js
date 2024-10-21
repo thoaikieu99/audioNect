@@ -51,7 +51,6 @@ const getApiNgheNhieu = async (page) => {
   return dataUrl;
 };
 
-
 const getApiListTL = async (slug, page) => {
   let dataUrl = await retuData(`${baseUl}/categories/${slug}?page=${+page}`);
   return dataUrl;
@@ -108,11 +107,21 @@ const getApiTuTuyen = async (obj, token) => {
   });
   let data = await sing.json();
   return data;
-
 };
 
 const loadData = async (dataax, token) => {
   const sing = await fetch(`${baseUl}/tu-truyen/getone/${+dataax}`, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  let data = await sing.json();
+  return data;
+};
+
+const getChek = async (token) => {
+  const sing = await fetch(`${baseUl}/users/checklg`, {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
@@ -146,7 +155,9 @@ export {
   getfind,
   singUP,
   singIn,
+  getChek,
   saveData,
-  loadData,getApiTuTuyen,
+  loadData,
+  getApiTuTuyen,
   themTTtr,
 };

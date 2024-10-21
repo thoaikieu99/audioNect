@@ -10,6 +10,7 @@ import { getfindsp } from "../services/apiServices";
 import SearchSp from "./searchSp";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import Acc from "./acc";
 const NavBar = (props) => {
   const [value, setValue] = useState("");
   const [svl, setSvl] = useState();
@@ -49,21 +50,7 @@ const NavBar = (props) => {
   }, []);
   var aasad = "";
   if (isClient) {
-    aasad = props.coo ? (
-      <Link href="#" className="nav-link">
-        <p>avate</p>
-      </Link>
-    ) : (
-      <>
-        <Link href="/signUp" className="nav-link">
-          <p>sign up</p>
-        </Link>
-
-        <Link href="/signIn" className="nav-link">
-          <p>sign in</p>
-        </Link>
-      </>
-    );
+    aasad = <Acc />;
   } else {
     aasad = "";
   }

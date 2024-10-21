@@ -3,7 +3,7 @@ import { singUP } from "@/components/services/apiServices";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useCookies } from "react-cookie";
-
+import { useSide } from "@/components/context/store";
 const SignUp = () => {
   const [username, setUsername] = useState();
   const [pass, setPass] = useState();
@@ -12,7 +12,7 @@ const SignUp = () => {
   const STARTTIME = "too";
   const MAXAGE = 7 * 24 * 3600;
   const [cookies, setCookie] = useCookies();
-
+  const { login } = useSide();
   const changName = (e) => {
     setUsername(e.target.value);
   };
@@ -44,6 +44,8 @@ const SignUp = () => {
     const aa = await aaa();
     if (aa.status == "success") {
       setCookie(STARTTIME, aa.token, { maxAge: MAXAGE });
+      login(aa.data.user.username);
+
       router.push(`/`);
     } else if (aa.status == "fail") {
       alert(aa.message);
