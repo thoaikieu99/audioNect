@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useCookies } from "react-cookie";
-import { useContext } from "react";
+
 import { useSide } from "@/components/context/store";
 
 const SignIn = () => {
@@ -13,8 +13,8 @@ const SignIn = () => {
   const MAXAGE = 7 * 24 * 3600;
   const [cookies, setCookie] = useCookies();
 
-  const [username, setUsername] = useState();
-  const [pass, setPass] = useState();
+  const [username, setUsername] = useState("");
+  const [pass, setPass] = useState("");
   const aaa = async () => {
     const obj = {
       username: username,
@@ -57,6 +57,7 @@ const SignIn = () => {
               alt="Login"
               width={100}
               height={100}
+              priority
               style={{
                 width: "30%",
                 height: "auto",
@@ -82,14 +83,14 @@ const SignIn = () => {
             onChange={changPass}
             placeholder="Mat khau"
           />
-          <div class="sign-txt s1ddd">
+          <div className="sign-txt s1ddd">
             <Link href="/forgot">Forgot password?</Link>
           </div>
           <div className="asd">
             <button type="submit">Submit</button>
           </div>
         </form>
-        <div class="sign-txt">
+        <div className="sign-txt">
           Not a member? <Link href="/signUp">Signup now</Link>
         </div>
       </div>

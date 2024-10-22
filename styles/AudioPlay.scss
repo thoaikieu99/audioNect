@@ -2,7 +2,10 @@
 .res{
     height: calc(100vh - 100px);
 }
-
+.sss{display: -webkit-box;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    -webkit-box-orient: vertical;}
 .AudioPlay{
     -moz-user-select: none !important;
     -webkit-touch-callout: none!important;
@@ -53,7 +56,7 @@
 }
 @media only screen and (min-height: 673px) {
     .AudioPlay{
-        max-height: 57vh;
+        // max-height: 80vh;
         .lisAudio{
             max-height: calc(57vh - 260px);
         

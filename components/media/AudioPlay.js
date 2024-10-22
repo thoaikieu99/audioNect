@@ -201,7 +201,11 @@ const AudioPlay = (props) => {
   };
   const ll = (
     <AudioPlayer
-      header={<h3 style={{ textAlign: "center" }}>{audio.title}</h3>}
+      header={
+        <h5 className="sss" style={{ textAlign: "center" }}>
+          {audio.title}
+        </h5>
+      }
       src={playlist[currentTrack]}
       onPlay={connPlay}
       onPause={connPause}
@@ -331,12 +335,46 @@ const AudioPlay = (props) => {
       alert("Da them vao tu truyen");
     }
   };
+  const sav = (
+    <>
+      <span
+        style={{
+          paddingRight: "20px",
+          display: "inline",
+          position: "absolute",
+          right: "90px ",
+        }}
+        onClick={onClo}
+      >
+        save
+      </span>
+      <span
+        style={{
+          paddingRight: "20px",
+          display: "inline",
+          position: "absolute",
+          right: "140px ",
+        }}
+        onClick={loadDa}
+      >
+        Load
+      </span>
+      <span
+        style={{
+          paddingRight: "20px",
+          display: "inline",
+          position: "absolute",
+          right: "190px ",
+        }}
+        onClick={themtt}
+      >
+        them
+      </span>
+    </>
+  );
   return (
     <div className="d-flex res justify-content-center align-items-center ">
       <div className="AudioPlay col-12 col-sm-7 col-md-6 rounded-3 shadow-lg bg-body ">
-        <Button onClick={themtt}>Them vao tu truyen</Button>
-        <Button onClick={onClo}>Save</Button>
-        <Button onClick={loadDa}>Load</Button>
         <div className="list">
           {ll}
           <div
@@ -404,6 +442,7 @@ const AudioPlay = (props) => {
             >
               {formatTime(timeoff)}
             </span>
+            {sav}
           </div>
           <PerfectScrollbar>
             <Container>

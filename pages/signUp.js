@@ -5,10 +5,10 @@ import { useState } from "react";
 import { useCookies } from "react-cookie";
 import { useSide } from "@/components/context/store";
 const SignUp = () => {
-  const [username, setUsername] = useState();
-  const [pass, setPass] = useState();
-  const [email, setEmail] = useState();
-  const [confir, setConfir] = useState();
+  const [username, setUsername] = useState("");
+  const [pass, setPass] = useState("");
+  const [email, setEmail] = useState("");
+  const [confir, setConfir] = useState("");
   const STARTTIME = "too";
   const MAXAGE = 7 * 24 * 3600;
   const [cookies, setCookie] = useCookies();

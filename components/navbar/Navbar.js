@@ -106,7 +106,7 @@ const NavBar = (props) => {
                 </Form>
               </Nav>
             </Nav>
-            <Nav>{aasad}</Nav>
+            <Nav className="ajaj">{aasad}</Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>
