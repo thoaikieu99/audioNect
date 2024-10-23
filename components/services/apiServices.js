@@ -143,6 +143,17 @@ const themTTtr = async (obj, token) => {
   let data = await sing.json();
   return data;
 };
+
+const checkTT = async (token, id) => {
+  const sing = await fetch(`${baseUl}/tu-truyen/getone/${id}`, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  let data = await sing.json();
+  return data;
+};
 export {
   getApiNewAudio,
   getApiTheLoai,
@@ -160,4 +171,5 @@ export {
   loadData,
   getApiTuTuyen,
   themTTtr,
+  checkTT,
 };

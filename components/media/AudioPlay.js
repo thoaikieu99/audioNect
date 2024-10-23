@@ -6,16 +6,18 @@ import "react-perfect-scrollbar/dist/css/styles.css";
 import { Button, Container, Row } from "react-bootstrap";
 import { useCookies } from "react-cookie";
 import {
+  checkTT,
   getApiAddViews,
   loadData,
   saveData,
   themTTtr,
 } from "../services/apiServices";
+import { useSide } from "../context/store";
 const NodeRSA = require("node-rsa");
 const AudioPlay = (props) => {
   const { audio } = props;
   const [playlist, setPlaylist] = useState("");
-
+  const [cookies, setCookie] = useCookies();
   useEffect(() => {
     const key1 = new NodeRSA();
     let data2 =
@@ -24,7 +26,23 @@ const AudioPlay = (props) => {
     const decryptedString = key1.decrypt(audio.link_audio, "utf8").slice(1, -1);
     setPlaylist(decryptedString.split("<br>"));
   }, []);
-
+  const [isFv, setIsFv] = useState(false);
+  const { isLogin, userName } = useSide();
+  const STARTT = "too";
+  const getIf = async () => {
+    let aa = await checkTT(cookies[STARTT], audio.id);
+    if (aa.message == "not Find one TT") {
+      setIsFv(false);
+    }
+    if (aa.status == "success") {
+      setIsFv(true);
+    }
+  };
+  useEffect(() => {
+    if (isLogin) {
+      getIf();
+    }
+  }, [isLogin]);
   const STARTTIME = "startime-" + audio.id;
   const SPEED = "startspeed-" + audio.id;
   const INDEXAU = "track-" + audio.id;
@@ -35,8 +53,6 @@ const AudioPlay = (props) => {
   const [isplaya, setIsplaya] = useState(false);
   const [stsv1, setStsv1] = useState(true);
   const [timeoff, setTimeoff] = useState(0);
-
-  const [cookies, setCookie] = useCookies();
 
   const [covertTime, setCovertTime] = useState();
   const [hidetime, setHidetime] = useState(false);
@@ -333,9 +349,12 @@ const AudioPlay = (props) => {
     const aa = await themTTtr(obj, cookies[START]);
     if (aa.status == "error") {
       alert("Da them vao tu truyen");
+    } else {
+      getIf();
     }
   };
-  const sav = (
+
+  const sav = isFv ? (
     <>
       <span
         style={{
@@ -359,18 +378,19 @@ const AudioPlay = (props) => {
       >
         Load
       </span>
-      <span
-        style={{
-          paddingRight: "20px",
-          display: "inline",
-          position: "absolute",
-          right: "190px ",
-        }}
-        onClick={themtt}
-      >
-        them
-      </span>
     </>
+  ) : (
+    <span
+      style={{
+        paddingRight: "20px",
+        display: "inline",
+        position: "absolute",
+        right: "90px ",
+      }}
+      onClick={themtt}
+    >
+      them
+    </span>
   );
   return (
     <div className="d-flex res justify-content-center align-items-center ">

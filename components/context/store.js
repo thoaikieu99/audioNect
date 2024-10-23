@@ -41,7 +41,7 @@ export function SidebarProvider({ children }) {
     if (cookies[STARTTIME]) {
       chec();
     }
-  }, []);
+  }, [isLogin]);
 
   return (
     <SidebarContext.Provider value={{ removeCoo, userName, isLogin, login }}>
