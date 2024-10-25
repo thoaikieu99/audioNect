@@ -9,6 +9,7 @@ import "@/styles/ListTopAudi.scss";
 import "@/styles/theLoai.scss";
 import "@/styles/TopAudio.scss";
 import "@/styles/signUp.scss";
+import "@/styles/Iot.scss";
 import { useEffect } from "react";
 import Head from "next/head";
 import { CookiesProvider, useCookies } from "react-cookie";
