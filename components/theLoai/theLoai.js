@@ -120,7 +120,7 @@ const TheLoai = () => {
   return (
     <li className="nav-item dropdown ">
       <Link
-        className="nav-link dropdown-toggle"
+        className="nav-link dropdown-toggle "
         href="/"
         role="button"
         data-bs-toggle="dropdown"
@@ -128,7 +128,7 @@ const TheLoai = () => {
       >
         Thể Loại
       </Link>
-      <ul className="dropdown-menu theLoai sha">
+      <ul className="dropdown-menu theLoai sha cloc">
         <PerfectScrollbar>
           <Container>
             <Row className="tb">{ListAudio}</Row>

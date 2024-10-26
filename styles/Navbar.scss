@@ -14,6 +14,24 @@
 .ajaj{
     padding-top: 16px;
 }
+.div_auth{
+    position: relative;
+    width: 70px;
+    height: 40px;
+}
+.linka{
+        /* position: absolute; */
+        width: 75px;
+        /* height: 30px; */
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        p{        
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+}
 .abcd{
     
     display: none!important;

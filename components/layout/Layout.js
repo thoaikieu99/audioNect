@@ -1,10 +1,16 @@
+import { useState } from "react";
 import NavBar from "../navbar/Navbar";
 
 const Layout = (props) => {
+  const [isClick, setIsClick] = useState("nu");
+  const cik = () => {
+    setIsClick(!isClick);
+  };
+
   return (
     <>
-      <NavBar>
-        <main>{props.children}</main>
+      <NavBar isClick={isClick}>
+        <main onClick={cik}>{props.children}</main>
       </NavBar>
     </>
   );

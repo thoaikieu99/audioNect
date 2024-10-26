@@ -25,7 +25,7 @@ const AudioPlay = (props) => {
     key1.importKey(data2, "pkcs1-pem");
     const decryptedString = key1.decrypt(audio.link_audio, "utf8").slice(1, -1);
     setPlaylist(decryptedString.split("<br>"));
-  }, []);
+  }, [audio]);
   const [isFv, setIsFv] = useState(false);
   const { isLogin, userName } = useSide();
   const STARTT = "too";
@@ -43,12 +43,6 @@ const AudioPlay = (props) => {
       getIf();
     }
   }, [isLogin]);
-  const STARTTIME = "startime-" + audio.id;
-  const SPEED = "startspeed-" + audio.id;
-  const INDEXAU = "track-" + audio.id;
-  const LINKAU = "linkk-" + audio.id;
-  const MAXAGE = 7 * 24 * 3600;
-  const START = "too";
 
   const [isplaya, setIsplaya] = useState(false);
   const [stsv1, setStsv1] = useState(true);
@@ -70,6 +64,12 @@ const AudioPlay = (props) => {
   const buttonRef = useRef(null);
 
   useEffect(() => {
+    const STARTTIME = "startime-" + audio.id;
+    const SPEED = "startspeed-" + audio.id;
+    const INDEXAU = "track-" + audio.id;
+    const LINKAU = "linkk-" + audio.id;
+    const MAXAGE = 7 * 24 * 3600;
+    const START = "too";
     setCookieLink(cookies[LINKAU]);
     setCookieIndex(cookies[INDEXAU]);
     setCookieTime(cookies[STARTTIME]);
@@ -87,8 +87,10 @@ const AudioPlay = (props) => {
         return time;
       };
       setCovertTime(coverTime(cookies[STARTTIME]));
+    } else {
+      setCheckCook(false);
     }
-  }, []);
+  }, [audio]);
 
   useEffect(() => {
     buttonRef.current.audio.current.playbackRate = speed;
@@ -125,6 +127,12 @@ const AudioPlay = (props) => {
 
   const saveLocal = (currentTime, scr) => {
     if (isplaya) {
+      const STARTTIME = "startime-" + audio.id;
+      const SPEED = "startspeed-" + audio.id;
+      const INDEXAU = "track-" + audio.id;
+      const LINKAU = "linkk-" + audio.id;
+      const MAXAGE = 7 * 24 * 3600;
+      const START = "too";
       let time = parseInt(currentTime);
       if (time && speed && currentTrack !== "" && scr) {
         setCookie(STARTTIME, time, { maxAge: MAXAGE });

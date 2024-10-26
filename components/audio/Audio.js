@@ -16,7 +16,9 @@ const Audio = (props) => {
         <Image
           src={`http://47.129.182.111:8081/rez/${props.image}`}
           width={193}
+          placeholder="blur"
           height={278}
+          blurDataURL={"/21-the-ky-dich-tu-linh-phap-su.jpeg"}
           alt={props.title}
         />
         <div className="divTile">

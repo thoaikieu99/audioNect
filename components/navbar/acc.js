@@ -29,13 +29,16 @@ const Acc = () => {
     aa
   ) : (
     <>
-      <Link href="/signUp" className="nav-link">
-        <p>sign up</p>
-      </Link>
-
-      <Link href="/signIn" className="nav-link">
-        <p>sign in</p>
-      </Link>
+      <div className="div_auth">
+        <Link href="/signUp" className="nav-link linka">
+          <p className="noneP">sign up</p>
+        </Link>
+      </div>
+      <div className="div_auth">
+        <Link href="/signIn" className="nav-link linka">
+          <p>sign in</p>
+        </Link>
+      </div>
     </>
   );
   return aasad;

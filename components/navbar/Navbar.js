@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -8,12 +8,14 @@ import { Button } from "react-bootstrap";
 import TheLoai from "../theLoai/theLoai";
 import { getfindsp } from "../services/apiServices";
 import SearchSp from "./searchSp";
+
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Acc from "./acc";
 const NavBar = (props) => {
   const [value, setValue] = useState("");
   const [svl, setSvl] = useState();
+  const inputRef = React.useRef(null);
   const handleChange = (e) => {
     setValue(e.target.value);
   };
@@ -25,6 +27,18 @@ const NavBar = (props) => {
       setSvl();
     }
   };
+  useEffect(() => {
+    if (props.isClick != "nu") {
+    }
+    document.querySelectorAll(".cloc").forEach((el) =>
+      el.addEventListener("click", function () {
+        if (inputRef.current.className == "navbar-toggler") {
+          inputRef.current.click();
+        }
+      })
+    );
+  }, [props.isClick]);
+
   useEffect(() => {
     const timer = setTimeout(() => {
       send();
@@ -54,12 +68,15 @@ const NavBar = (props) => {
   } else {
     aasad = "";
   }
+  const hid = () => {
+    setSvl();
+  };
 
   return (
-    <div className="Nabar">
+    <div className="Nabar" onClick={hid}>
       <Navbar collapseOnSelect expand="lg" className=" bg-secondary fixed-top">
         <Container>
-          <Link href="/" className="navbar-brand me-auto">
+          <Link href="/" className="navbar-brand me-auto cloc">
             <Image
               src="/logo192.png"
               width={35}
@@ -67,20 +84,20 @@ const NavBar = (props) => {
               alt="Kianai"
             ></Image>
           </Link>
-          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+          <Navbar.Toggle ref={inputRef} aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto" style={{ paddingRight: "100px" }}>
-              <Link href="/nghe-nhieu" className="nav-link">
+              <Link href="/nghe-nhieu" className="nav-link cloc">
                 Nghe nhiều
               </Link>
               <TheLoai />
-              <Link href="/tu-truyen" className="nav-link">
+              <Link href="/tu-truyen" className="nav-link cloc">
                 Tu truyen
               </Link>
               <Nav
                 style={{
                   position: "relative",
-                  height: "18px",
+                  height: "40px",
                   width: "200px",
                 }}
               >
@@ -106,7 +123,7 @@ const NavBar = (props) => {
                 </Form>
               </Nav>
             </Nav>
-            <Nav className="ajaj">{aasad}</Nav>
+            <Nav>{aasad}</Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>
