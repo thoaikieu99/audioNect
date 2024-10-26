@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
@@ -7,20 +6,22 @@ import { Col, Row } from "react-bootstrap";
 import ReactPaginate from "react-paginate";
 import { getApiTuTuyen } from "@/components/services/apiServices";
 import { useCookies } from "react-cookie";
+import LoadingModel from "@/components/ui/loadingModel";
 const START = "too";
-const TuTruyen = () => {  
+const TuTruyen = () => {
   const router = useRouter();
+  const [isLoad, setIsLoad] = useState(true);
   const [cookies, setCookie] = useCookies();
   const [listAudio, setListAudio] = useState();
   const [pageCount, setPageCount] = useState(0);
   const [isLogin, setIsLogin] = useCookies(false);
   const getdata = async (page = 0) => {
-    const data = await getApiTuTuyen(page,cookies[START]);
-    if(data.status == 'fail'){
-        alert(data.message)
-        return 1;
+    const data = await getApiTuTuyen(page, cookies[START]);
+    if (data.status == "fail") {
+      alert(data.message);
+      return 1;
     }
-    console.log(data)
+    console.log(data);
     setListAudio(data);
     return data.data.count;
   };
@@ -37,6 +38,18 @@ const TuTruyen = () => {
     const collection = document.getElementsByClassName("page-item");
     collection[0].scrollIntoView(true);
   };
+  useEffect(() => {
+    setIsLoad(true);
+    const timer = setTimeout(() => {
+      setIsLoad(false);
+    }, 200);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoad) {
+    return <LoadingModel />;
+  }
   return (
     <div style={{ maxWidth: "800px" }} className="container px-2">
       <div className="relative">

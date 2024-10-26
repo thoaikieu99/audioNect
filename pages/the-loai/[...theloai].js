@@ -5,9 +5,12 @@ import ListAudio from "@/components/audio/ListAudio";
 import { Col, Row } from "react-bootstrap";
 import ReactPaginate from "react-paginate";
 import { getApiListTL } from "@/components/services/apiServices";
+import LoadingModel from "@/components/ui/loadingModel";
 
 const TheLoai = () => {
   const router = useRouter();
+  const [isLoad, setIsLoad] = useState(true);
+
   const { theloai } = router.query;
   const [listAudio, setListAudio] = useState();
   const [pageCount, setPageCount] = useState(0);
@@ -27,6 +30,18 @@ const TheLoai = () => {
     };
     ad();
   }, [theloai]);
+  useEffect(() => {
+    setIsLoad(true);
+    const timer = setTimeout(() => {
+      setIsLoad(false);
+    }, 200);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoad) {
+    return <LoadingModel />;
+  }
   const handlePageClick = (event) => {
     getdata(event.selected);
     const collection = document.getElementsByClassName("page-item");

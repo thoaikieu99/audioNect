@@ -5,11 +5,13 @@ import ListAudio from "@/components/audio/ListAudio";
 import { Col, Row } from "react-bootstrap";
 import ReactPaginate from "react-paginate";
 import { getApiNgheNhieu } from "@/components/services/apiServices";
+import LoadingModel from "@/components/ui/loadingModel";
 
 const NgheNhieu = () => {
   const router = useRouter();
   const [listAudio, setListAudio] = useState();
   const [pageCount, setPageCount] = useState(0);
+  const [isLoad, setIsLoad] = useState(true);
 
   const getdata = async (page = 0) => {
     const data = await getApiNgheNhieu(page);
@@ -24,6 +26,18 @@ const NgheNhieu = () => {
     };
     ad();
   }, []);
+  useEffect(() => {
+    setIsLoad(true);
+    const timer = setTimeout(() => {
+      setIsLoad(false);
+    }, 200);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoad) {
+    return <LoadingModel />;
+  }
   const handlePageClick = (event) => {
     getdata(event.selected);
     const collection = document.getElementsByClassName("page-item");

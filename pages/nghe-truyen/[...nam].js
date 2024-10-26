@@ -3,28 +3,30 @@ import { useEffect, useState } from "react";
 import { getOneAudio } from "@/components/services/apiServices";
 import { useRouter } from "next/router";
 import AudioPlay from "@/components/media/AudioPlay";
+import Loading from "@/components/ui/loading";
+import LoadingModel from "@/components/ui/loadingModel";
 
-const MediaAudio = (props) => {
+const MediaAudio = () => {
   const router = useRouter();
   const { nam } = router.query;
   const [ifAudio, setIfAudio] = useState();
-  const { dataA } = props;
+  const [isLoad, setIsLoad] = useState(true);
 
+  const getIf = async () => {
+    if (nam) {
+      const dataA = await getOneAudio(nam);
+      setIfAudio(dataA.data?.audio);
+      setIsLoad(false);
+    }
+  };
   useEffect(() => {
-    const getIf = async () => {
-      if (nam) {
-        setIfAudio(dataA.data?.audio);
-      }
-    };
+    setIsLoad(true);
     getIf();
-  }, [nam, dataA.data]);
+  }, [nam]);
+  if (isLoad) {
+    return <LoadingModel />;
+  }
 
   return <>{ifAudio ? <AudioPlay audio={ifAudio} /> : ""}</>;
 };
 export default MediaAudio;
-export async function getServerSideProps(ctx) {
-  const { nam } = ctx.params;
-
-  const dataA = await getOneAudio(nam);
-  return { props: { dataA } };
-}

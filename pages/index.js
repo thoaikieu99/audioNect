@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { Col, Row } from "react-bootstrap";
 import ReactPaginate from "react-paginate";
 import ListAudio from "@/components/audio/ListAudio";
+import LoadingModel from "@/components/ui/loadingModel";
 export default function Home(props) {
   const [pageCount, setPageCount] = useState(0);
   const gpae = Math.ceil(props.dataa.data.count / 42);
@@ -17,9 +18,23 @@ export default function Home(props) {
       router.push(`?page=${event.selected + 1}`);
     }
   };
+
   useEffect(() => {
     setPageCount(+props.pa - 1);
   }, []);
+  const [isLoad, setIsLoad] = useState(true);
+  useEffect(() => {
+    setIsLoad(true);
+    const timer = setTimeout(() => {
+      setIsLoad(false);
+    }, 200);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoad) {
+    return <LoadingModel />;
+  }
   return (
     <>
       <NarTopList topDay={props.topDay} topM={props.topM} topY={props.topY}>

@@ -13,11 +13,14 @@ import {
   themTTtr,
 } from "../services/apiServices";
 import { useSide } from "../context/store";
+import LoadingModel from "../ui/loadingModel";
 const NodeRSA = require("node-rsa");
 const AudioPlay = (props) => {
   const { audio } = props;
   const [playlist, setPlaylist] = useState("");
+  const [isLoad, setIsLoad] = useState(false);
   const [cookies, setCookie] = useCookies();
+
   useEffect(() => {
     const key1 = new NodeRSA();
     let data2 =
@@ -28,6 +31,7 @@ const AudioPlay = (props) => {
   }, [audio]);
   const [isFv, setIsFv] = useState(false);
   const { isLogin, userName } = useSide();
+
   const STARTT = "too";
   const getIf = async () => {
     let aa = await checkTT(cookies[STARTT], audio.id);
@@ -62,14 +66,14 @@ const AudioPlay = (props) => {
   const [checkCook, setCheckCook] = useState(false);
   const [currentTrack, setTrackIndex] = useState(0);
   const buttonRef = useRef(null);
-
+  const START = "too";
   useEffect(() => {
     const STARTTIME = "startime-" + audio.id;
     const SPEED = "startspeed-" + audio.id;
     const INDEXAU = "track-" + audio.id;
     const LINKAU = "linkk-" + audio.id;
     const MAXAGE = 7 * 24 * 3600;
-    const START = "too";
+
     setCookieLink(cookies[LINKAU]);
     setCookieIndex(cookies[INDEXAU]);
     setCookieTime(cookies[STARTTIME]);
@@ -315,6 +319,12 @@ const AudioPlay = (props) => {
   }, [timeoff]);
 
   const onClo = async () => {
+    setIsLoad(true);
+    const STARTTIME = "startime-" + audio.id;
+    const SPEED = "startspeed-" + audio.id;
+    const INDEXAU = "track-" + audio.id;
+    const LINKAU = "linkk-" + audio.id;
+
     const obj = {
       recaudio: cookies[LINKAU],
       rectile: cookies[INDEXAU],
@@ -334,19 +344,36 @@ const AudioPlay = (props) => {
     if (aa.status == "success") {
       alert("success");
     }
+    setIsLoad(false);
   };
 
   const loadDa = async () => {
+    setIsLoad(true);
     const aa = await loadData(audio.id, cookies[START]);
     if (aa.status == "success") {
       let aaa = aa.data.TuTruyen.recaudio;
-      setCookieLink(aa.data.TuTruyen.recaudio);
-      setCookieIndex(+aa.data.TuTruyen.rectile);
-      setCookieTime(+aa.data.TuTruyen.startime);
-      setCookieSpeed(aa.data.TuTruyen.startspeed);
-      if (cookieSpeed == aa.data.TuTruyen.startspeed) {
-        ngheTiepClick();
+      if (aaa) {
+        setCookieLink(aa.data.TuTruyen.recaudio);
+        setCookieIndex(+aa.data.TuTruyen.rectile);
+        setCookieTime(+aa.data.TuTruyen.startime);
+        setCookieSpeed(aa.data.TuTruyen.startspeed);
+        setCheckCook(true);
+        const coverTime = (totalSeconds) => {
+          let hours = Math.floor(totalSeconds / 3600);
+          totalSeconds %= 3600;
+          let minutes = Math.floor(totalSeconds / 60);
+          let seconds = totalSeconds % 60;
+          let time = `${hours < 10 ? "0" + hours : hours}:${
+            minutes < 10 ? "0" + minutes : minutes
+          }:${seconds < 10 ? "0" + seconds : seconds}`;
+          return time;
+        };
+        setCovertTime(coverTime(+aa.data.TuTruyen.startime));
+        if (cookieSpeed == aa.data.TuTruyen.startspeed && cookieLink == aaa) {
+          ngheTiepClick();
+        }
       }
+      setIsLoad(false);
     }
   };
 
@@ -354,12 +381,15 @@ const AudioPlay = (props) => {
     const obj = {
       audio_id: audio.id,
     };
+    setIsLoad(true);
     const aa = await themTTtr(obj, cookies[START]);
     if (aa.status == "error") {
       alert("Da them vao tu truyen");
     } else {
+      alert("Thanh Cong");
       getIf();
     }
+    setIsLoad(false);
   };
 
   const sav = isFv ? (
@@ -402,6 +432,7 @@ const AudioPlay = (props) => {
   );
   return (
     <div className="d-flex res justify-content-center align-items-center ">
+      {isLoad && <LoadingModel />}
       <div className="AudioPlay col-12 col-sm-7 col-md-6 rounded-3 shadow-lg bg-body ">
         <div className="list">
           {ll}
@@ -424,6 +455,7 @@ const AudioPlay = (props) => {
             <span
               className={`tii ${stsv1 ? null : "acc"}`}
               style={{ padding: "0 20px 0 20px" }}
+              Loading
               onClick={svVip}
             >
               Sv-Vip
