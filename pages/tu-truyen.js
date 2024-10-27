@@ -51,9 +51,9 @@ const TuTruyen = () => {
     return <LoadingModel />;
   }
   return (
-    <div style={{ maxWidth: "800px" }} className="container">
+    <div style={{ maxWidth: "800px" }} className="container pad">
       <div className="relative">
-        <h3 className="page-title">{listAudio?.nameTheLoai}</h3>
+        <h3 className="page-title">Tu truyen</h3>
       </div>
       <ListAudio onList={listAudio?.data?.rows} mdsize={3} />
       <Row className="justify-content-md-center">

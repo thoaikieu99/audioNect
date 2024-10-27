@@ -15,6 +15,9 @@ code {
 .loadOve{
   display: block!important;
 }
+.pad{
+  padding: 0 20px 0 20px;
+}
 .overLay{
   position: fixed;
   display: none;

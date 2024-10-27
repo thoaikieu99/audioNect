@@ -23,7 +23,7 @@ const SearchTruyen = (props) => {
   return (
     <>
       <NarTopList topDay={props.topDay} topM={props.topM} topY={props.topY}>
-        <div style={{ maxWidth: "800px" }} className="container ">
+        <div style={{ maxWidth: "800px" }} className="container">
           <div className="relative">
             <h3 className="page-title">Tìm kiếm: {props.name}</h3>
           </div>

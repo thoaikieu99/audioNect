@@ -29,6 +29,9 @@ const NavBar = (props) => {
   };
   useEffect(() => {
     if (props.isClick != "nu") {
+      if (inputRef.current.className == "navbar-toggler") {
+        inputRef.current.click();
+      }
     }
     document.querySelectorAll(".cloc").forEach((el) =>
       el.addEventListener("click", function () {
