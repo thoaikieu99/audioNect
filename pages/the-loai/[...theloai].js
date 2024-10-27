@@ -48,7 +48,7 @@ const TheLoai = () => {
     collection[0].scrollIntoView(true);
   };
   return (
-    <div style={{ maxWidth: "800px" }} className="container px-2">
+    <div style={{ maxWidth: "800px" }} className="container">
       <div className="relative">
         <h3 className="page-title">{listAudio?.nameTheLoai}</h3>
       </div>

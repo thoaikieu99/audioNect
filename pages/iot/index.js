@@ -63,12 +63,12 @@ const Iot = () => {
           const obj = JSON.parse(payload.message);
           console.log(obj);
           if (obj.Motor == "On") {
-            setMessages(true);
             setChecked(true);
+            setMessages(true);
           }
           if (obj.Motor == "Off") {
-            setMessages(true);
             setChecked(false);
+            setMessages(true);
           }
         }
         setPayload(payload);
